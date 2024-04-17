@@ -1,0 +1,155 @@
+-- enemies
+lvl1 = 10
+lvl2 = 15
+lvl3 = 20
+lvl4 = 20
+lvl5 = 40
+lvlx= 60
+lvly= 100
+lvlw = bossx
+lvlz = bossy
+fightw = lvlx
+fightz = lvly
+fighter = 55
+bossfight = 33
+enemyattacking = false
+stiming = 0
+
+--spawns lvl 1
+function lvl1enemy()
+if lvl1 != 0 then
+	spr(039,lvlx,lvly)
+	if x > lvlx then lvlx+=.1end
+	if x<lvlx then lvlx-=.1end
+	if y>lvly then lvly+=.1end
+	if y<lvly then lvly-=.1end
+	attack_hit()
+	enemyattack()
+	else
+	level=2
+	lvl2enemy()
+end
+end
+
+--spawns lvl 2
+function lvl2enemy()
+if lvl2 != 0 then
+	spr(040,lvlx,lvly)
+	if x > lvlx then lvlx+=.2end
+	if x<lvlx then lvlx-=.2end
+	if y>lvly then lvly+=.2end
+	if y<lvly then lvly-=.2end
+	attack_hit()
+	else
+	level=3
+	lvl3enemy()
+end
+end
+
+--spawns lvl 3
+function lvl3enemy()
+if lvl3 != 0 then
+	spr(041,lvlx,lvly)
+	if x > lvlx then lvlx+=.3end
+	if x<lvlx then lvlx-=.3end
+	if y>lvly then lvly+=.3end
+	if y<lvly then lvly-=.3end
+	attack_hit()
+	else
+	level = 4
+	lvl4enemy()
+end
+end
+
+--spawns the boss
+function spawn()
+if stimer < 199 then
+lvlw =bossx
+lvlz =bossx
+else
+if level == 5 then
+lvlx = lvlw
+lvly = lvlz
+lvl5enemy()
+end
+end
+end
+
+--spawns lvl4
+function lvl4enemy()
+if lvl4 != 0 then
+	spr(042,lvlx,lvly)
+	if x > lvlx then lvlx+=.5end
+	if x<lvlx then lvlx-=.5end
+	if y>lvly then lvly+=.5end
+	if y<lvly then lvly-=.5end
+	attack_hit()
+	else
+	level = 5
+	boss() --starts the boss scene
+	
+end
+end
+
+--enemy attacking animation
+function attacker()
+if stiming< 10/level then
+stiming+=1
+else
+if fighter <60 then
+enemyattacking = true
+spr(fighter,lvlx,lvly)
+fighter+=1
+elseif level == 5 then
+spr(bossfight,lvlx,lvly)
+else
+fighter = 55
+end
+end
+end
+
+
+--attacks the player
+function enemyattack()
+if lvlx<= x+3 and lvlx>= x-3 and lvly>=y-3 and lvly<=y+3 then
+attacker()
+if healthx > 0 then
+if level == 1 then
+healthx-=.2
+healthbar-=.2
+elseif level == 2 then
+healthx-=.4
+healthbar-=.4
+elseif level == 3 then
+healthx-=1
+healthbar-=1
+elseif level == 4 then
+healthx-=2
+healthbar-=2
+else
+if lvlw<= x+3 and lvlw>= x-3 and lvlz>=y-3 and lvlz<=y+3 then
+healthx-=3
+healthbar-=3
+end
+end
+end
+end
+end
+
+--boss stats
+function lvl5enemy()
+if lvl5 != 0 then
+	spr(043,lvlw,lvlz)
+	if x > lvlw then lvlw+=.6
+	lvlx+=.6end
+	if x<lvlw then lvlw-=.6
+	lvlx-=.6end
+	if y>lvlz then lvlz+=.6
+	lvly+=.6end
+	if y<lvlz then lvlz-=.6
+	lvly-=.6end
+	attack_hit()
+	else
+	print("you win!",64,64,0)
+end
+end
