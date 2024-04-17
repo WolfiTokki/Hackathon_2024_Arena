@@ -2,6 +2,7 @@
 #include <string>
 #include <thread>
 #include <chrono>
+#include <windows.h>
 
 using namespace std;
 
@@ -51,6 +52,8 @@ int main() {
     intro();
     if (button()) {
         cout << "You chose to risk it! You're playing the Arena" << endl;
+        ShellExecute(NULL, "open", "WolfiTokki/Hackathon_2024_Arena/arena_html/index.html",
+                NULL, NULL, SW_SHOWNORMAL);
     }
     else {
         cout << "You chose to exit the program." << endl;
